@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Settings } from "../types";
+  import { playAlarmSound } from "../services/notificationService";
 
   interface Props {
     settings: Settings;
@@ -85,15 +86,24 @@
 
   <div class="field toggle-field">
     <label for="sound-enabled">Alarm Sound</label>
-    <label class="toggle">
-      <input
-        id="sound-enabled"
-        type="checkbox"
-        bind:checked={draft.sound_enabled}
-        data-testid="sound-toggle"
-      />
-      <span class="slider"></span>
-    </label>
+    <div class="sound-controls">
+      <button class="btn-test" onclick={playAlarmSound} data-testid="test-sound-btn" title="Test alarm sound">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+      </button>
+      <label class="toggle">
+        <input
+          id="sound-enabled"
+          type="checkbox"
+          bind:checked={draft.sound_enabled}
+          data-testid="sound-toggle"
+        />
+        <span class="slider"></span>
+      </label>
+    </div>
   </div>
 
   <div class="actions">
@@ -159,6 +169,30 @@
 
   .toggle-field label:first-child {
     margin-bottom: 0;
+  }
+
+  .sound-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-test {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 24px;
+    padding: 0;
+    background: rgba(201, 169, 110, 0.1);
+    color: var(--accent-color);
+    border: 1px solid rgba(201, 169, 110, 0.2);
+    border-radius: 5px;
+  }
+
+  .btn-test:hover {
+    background: rgba(201, 169, 110, 0.22);
+    border-color: rgba(201, 169, 110, 0.4);
   }
 
   .toggle {
