@@ -6,19 +6,19 @@ describe("TimerControls", () => {
   it("shows Start button when idle", () => {
     render(TimerControls, { props: { status: "idle" } });
     expect(screen.getByTestId("start-btn")).toBeTruthy();
-    expect(screen.getByTestId("start-btn").textContent).toBe("Start");
+    expect(screen.getByTestId("start-btn").textContent).toContain("START");
   });
 
   it("shows Pause button when running", () => {
     render(TimerControls, { props: { status: "running" } });
     expect(screen.getByTestId("pause-btn")).toBeTruthy();
-    expect(screen.getByTestId("pause-btn").textContent).toBe("Pause");
+    expect(screen.getByTestId("pause-btn").textContent).toContain("PAUSE");
   });
 
   it("shows Resume button when paused", () => {
     render(TimerControls, { props: { status: "paused" } });
     expect(screen.getByTestId("resume-btn")).toBeTruthy();
-    expect(screen.getByTestId("resume-btn").textContent).toBe("Resume");
+    expect(screen.getByTestId("resume-btn").textContent).toContain("RESUME");
   });
 
   it("shows Reset button when not idle", () => {

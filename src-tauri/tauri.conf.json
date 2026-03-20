@@ -14,8 +14,8 @@
     "windows": [
       {
         "title": "Window Timer",
-        "width": 300,
-        "height": 400,
+        "width": 320,
+        "height": 480,
         "resizable": true,
         "decorations": true,
         "center": true

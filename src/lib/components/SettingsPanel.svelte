@@ -104,36 +104,51 @@
 
 <style>
   .settings-panel {
-    padding: 20px;
+    padding: 24px 20px;
     width: 100%;
     max-width: 280px;
   }
 
   h2 {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     text-align: center;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--accent-light);
   }
 
   .field {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
 
   label {
     display: block;
-    font-size: 13px;
-    margin-bottom: 4px;
-    color: #aaa;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: var(--text-muted);
   }
 
   input[type="number"],
   input[type="text"] {
     width: 100%;
     background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
+    border: 1px solid var(--surface-border);
+    border-radius: 6px;
     color: var(--text-color);
-    padding: 6px 8px;
+    padding: 8px 10px;
     font-size: 14px;
+    font-family: var(--font-body);
+    transition: border-color 0.2s;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: var(--accent-color);
   }
 
   .toggle-field {
@@ -166,9 +181,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #555;
+    background-color: #2a2a35;
     border-radius: 24px;
-    transition: 0.2s;
+    transition: 0.25s;
   }
 
   .slider::before {
@@ -178,40 +193,46 @@
     width: 18px;
     left: 3px;
     bottom: 3px;
-    background-color: white;
+    background-color: #6a6878;
     border-radius: 50%;
-    transition: 0.2s;
+    transition: 0.25s;
   }
 
   .toggle input:checked + .slider {
-    background-color: #27ae60;
+    background-color: rgba(201, 169, 110, 0.25);
   }
 
   .toggle input:checked + .slider::before {
     transform: translateX(20px);
+    background-color: var(--accent-color);
   }
 
   .actions {
     display: flex;
     gap: 8px;
-    margin-top: 20px;
+    margin-top: 24px;
   }
 
   .btn-save {
     flex: 1;
-    background: #27ae60;
-    color: white;
+    background: linear-gradient(135deg, #c9a96e, #b8944f);
+    color: #1a1a22;
+    font-weight: 600;
+    letter-spacing: 1px;
   }
   .btn-save:hover {
-    background: #219a52;
+    background: linear-gradient(135deg, #d4b87e, #c9a96e);
+    box-shadow: 0 4px 16px rgba(201, 169, 110, 0.25);
   }
 
   .btn-cancel {
     flex: 1;
-    background: #555;
-    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    color: #6a6878;
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
   .btn-cancel:hover {
-    background: #444;
+    background: rgba(255, 255, 255, 0.1);
+    color: #8a8898;
   }
 </style>

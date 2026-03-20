@@ -17,11 +17,11 @@ describe("TimeInput", () => {
     expect(screen.getByTestId("seconds-input")).toHaveProperty("disabled", true);
   });
 
-  it("has min/max attributes for minutes (0-99)", () => {
+  it("has min/max attributes for minutes (0-60)", () => {
     render(TimeInput, { props: { minutes: 5, seconds: 0 } });
     const mins = screen.getByTestId("minutes-input") as HTMLInputElement;
     expect(mins.min).toBe("0");
-    expect(mins.max).toBe("99");
+    expect(mins.max).toBe("60");
   });
 
   it("has min/max attributes for seconds (0-59)", () => {
@@ -29,5 +29,21 @@ describe("TimeInput", () => {
     const secs = screen.getByTestId("seconds-input") as HTMLInputElement;
     expect(secs.min).toBe("0");
     expect(secs.max).toBe("59");
+  });
+
+  it("renders preset buttons", () => {
+    render(TimeInput, { props: { minutes: 5, seconds: 0 } });
+    expect(screen.getByTestId("btn-plus-1")).toBeTruthy();
+    expect(screen.getByTestId("btn-plus-5")).toBeTruthy();
+    expect(screen.getByTestId("btn-plus-10")).toBeTruthy();
+    expect(screen.getByTestId("btn-minus-1")).toBeTruthy();
+    expect(screen.getByTestId("btn-minus-5")).toBeTruthy();
+    expect(screen.getByTestId("btn-minus-10")).toBeTruthy();
+  });
+
+  it("disables preset buttons when disabled", () => {
+    render(TimeInput, { props: { minutes: 5, seconds: 0, disabled: true } });
+    expect(screen.getByTestId("btn-plus-1")).toHaveProperty("disabled", true);
+    expect(screen.getByTestId("btn-minus-1")).toHaveProperty("disabled", true);
   });
 });
