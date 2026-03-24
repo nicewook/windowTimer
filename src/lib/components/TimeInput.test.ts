@@ -31,19 +31,32 @@ describe("TimeInput", () => {
     expect(secs.max).toBe("59");
   });
 
-  it("renders preset buttons", () => {
+  it("renders preset chips", () => {
     render(TimeInput, { props: { minutes: 5, seconds: 0 } });
-    expect(screen.getByTestId("btn-plus-1")).toBeTruthy();
-    expect(screen.getByTestId("btn-plus-5")).toBeTruthy();
-    expect(screen.getByTestId("btn-plus-10")).toBeTruthy();
-    expect(screen.getByTestId("btn-minus-1")).toBeTruthy();
-    expect(screen.getByTestId("btn-minus-5")).toBeTruthy();
-    expect(screen.getByTestId("btn-minus-10")).toBeTruthy();
+    expect(screen.getByTestId("preset-5")).toBeTruthy();
+    expect(screen.getByTestId("preset-10")).toBeTruthy();
+    expect(screen.getByTestId("preset-15")).toBeTruthy();
+    expect(screen.getByTestId("preset-25")).toBeTruthy();
   });
 
-  it("disables preset buttons when disabled", () => {
+  it("disables preset chips when disabled", () => {
     render(TimeInput, { props: { minutes: 5, seconds: 0, disabled: true } });
-    expect(screen.getByTestId("btn-plus-1")).toHaveProperty("disabled", true);
-    expect(screen.getByTestId("btn-minus-1")).toHaveProperty("disabled", true);
+    expect(screen.getByTestId("preset-5")).toHaveProperty("disabled", true);
+    expect(screen.getByTestId("preset-10")).toHaveProperty("disabled", true);
+  });
+
+  it("highlights selected preset chip", () => {
+    render(TimeInput, { props: { minutes: 10, seconds: 0 } });
+    const chip10 = screen.getByTestId("preset-10");
+    const chip5 = screen.getByTestId("preset-5");
+    expect(chip10.classList.contains("selected")).toBe(true);
+    expect(chip5.classList.contains("selected")).toBe(false);
+  });
+
+  it("calls onchange when preset chip clicked", async () => {
+    const onchange = vi.fn();
+    render(TimeInput, { props: { minutes: 5, seconds: 0, onchange } });
+    await fireEvent.click(screen.getByTestId("preset-15"));
+    expect(onchange).toHaveBeenCalledWith(15, 0);
   });
 });

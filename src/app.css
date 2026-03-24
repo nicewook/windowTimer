@@ -1,17 +1,25 @@
 :root {
-  --bg-color: #0f0f13;
-  --bg-gradient: radial-gradient(ellipse at 50% 30%, #1a1a24 0%, #0f0f13 70%);
-  --text-color: #e8e4dc;
-  --text-muted: #6a6878;
-  --accent-color: #c9a96e;
-  --accent-light: #e8d5a3;
-  --accent-glow: rgba(201, 169, 110, 0.15);
-  --surface-color: #1a1a22;
-  --surface-border: #2a2a35;
-  --danger-color: #c0392b;
+  --bg-color: #060b18;
+  --bg-gradient: radial-gradient(ellipse at 50% 20%, #0d1528 0%, #060b18 70%);
+  --text-color: #e8dcc8;
+  --text-muted: #6b6458;
+  --accent-color: #c5973e;
+  --accent-light: #e2c074;
+  --accent-glow: rgba(197, 151, 62, 0.15);
+  --emerald: #1a7a5a;
+  --emerald-muted: rgba(26, 122, 90, 0.3);
+  --surface-color: #0d1424;
+  --surface-border: #1a2438;
 
-  --font-display: "Cormorant Garamond", "Georgia", serif;
-  --font-body: "Outfit", "Segoe UI", sans-serif;
+  --font-display: "Bodoni Moda", "Georgia", serif;
+  --font-body: "Josefin Sans", "Segoe UI", sans-serif;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --radius-pill: 20px;
+  --gold-line: rgba(197, 151, 62, 0.25);
 }
 
 * {
@@ -24,12 +32,48 @@ html, body {
   height: 100%;
   overflow: hidden;
   font-family: var(--font-body);
-  font-weight: 400;
+  font-weight: 300;
   background: var(--bg-gradient);
   background-color: var(--bg-color);
   color: var(--text-color);
+  font-feature-settings: "tnum" 1, "lnum" 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Art Deco geometric background pattern */
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(197, 151, 62, 0.03) 39px,
+      rgba(197, 151, 62, 0.03) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(197, 151, 62, 0.03) 39px,
+      rgba(197, 151, 62, 0.03) 40px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle noise grain overlay */
+html::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
 }
 
 #app {
@@ -37,18 +81,21 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 button {
   cursor: pointer;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-pill);
   padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 400;
   font-family: var(--font-body);
-  letter-spacing: 0.03em;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button:active {
@@ -59,19 +106,21 @@ input[type="number"],
 input[type="text"] {
   background: var(--surface-color);
   border: 1px solid var(--surface-border);
-  border-radius: 6px;
+  border-radius: 4px;
   color: var(--text-color);
   padding: 8px 10px;
   font-size: 14px;
   font-family: var(--font-body);
+  font-weight: 300;
   text-align: center;
-  transition: border-color 0.2s;
+  transition: border-color 0.3s;
 }
 
 input[type="number"]:focus,
 input[type="text"]:focus {
   outline: none;
   border-color: var(--accent-color);
+  box-shadow: 0 0 12px rgba(197, 151, 62, 0.1);
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -82,4 +131,16 @@ input[type="number"]::-webkit-outer-spin-button {
 ::selection {
   background: var(--accent-color);
   color: var(--bg-color);
+}
+
+/* Page load animation */
+@keyframes deco-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

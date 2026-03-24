@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/svelte";
 import CircularProgress from "./CircularProgress.svelte";
 
-const defaultProps = { progress: 0, timeText: "05:00", totalMinutes: 5 };
+const defaultProps = { progress: 0, timeText: "05:00", totalMinutes: 5, remainingMinutes: 5, status: "idle" as const };
 
 describe("CircularProgress", () => {
   it("renders SVG element", () => {
@@ -24,9 +24,9 @@ describe("CircularProgress", () => {
   });
 
   it("stroke-dashoffset reflects progress", () => {
-    const size = 240;
-    const strokeWidth = 6;
-    const radius = (size - strokeWidth * 2) / 2 - 8;
+    const size = 260;
+    const strokeWidth = 4;
+    const radius = (size - strokeWidth * 2) / 2 - 18;
     const circumference = 2 * Math.PI * radius;
 
     render(CircularProgress, { props: { ...defaultProps, progress: 0.5 } });
@@ -43,14 +43,25 @@ describe("CircularProgress", () => {
   });
 
   it("offset equals circumference when progress is 1", () => {
-    const size = 240;
-    const strokeWidth = 6;
-    const radius = (size - strokeWidth * 2) / 2 - 8;
+    const size = 260;
+    const strokeWidth = 4;
+    const radius = (size - strokeWidth * 2) / 2 - 18;
     const circumference = 2 * Math.PI * radius;
 
     render(CircularProgress, { props: { ...defaultProps, progress: 1, timeText: "00:00" } });
     const circle = screen.getByTestId("progress-circle");
     const offset = parseFloat(circle.getAttribute("stroke-dashoffset")!);
     expect(offset).toBeCloseTo(circumference, 0);
+  });
+
+  it("shows completion icon and text when completed", () => {
+    render(CircularProgress, { props: { ...defaultProps, status: "completed" as const, progress: 1, timeText: "00:00" } });
+    expect(screen.getByTestId("completion-icon")).toBeTruthy();
+    expect(screen.getByTestId("completion-text").textContent).toBe("COMPLETE");
+  });
+
+  it("hides time text when completed", () => {
+    render(CircularProgress, { props: { ...defaultProps, status: "completed" as const, progress: 1, timeText: "00:00" } });
+    expect(screen.queryByTestId("time-text")).toBeNull();
   });
 });

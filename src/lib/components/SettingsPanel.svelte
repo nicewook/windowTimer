@@ -24,7 +24,11 @@
 </script>
 
 <div class="settings-panel" data-testid="settings-panel">
-  <h2>Settings</h2>
+  <div class="panel-header">
+    <div class="deco-line"></div>
+    <h2>Settings</h2>
+    <div class="deco-line"></div>
+  </div>
 
   <div class="field">
     <label for="default-minutes">Default Minutes</label>
@@ -114,51 +118,68 @@
 
 <style>
   .settings-panel {
-    padding: 24px 20px;
+    padding: var(--space-lg) var(--space-md);
     width: 100%;
     max-width: 280px;
   }
 
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .deco-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(197, 151, 62, 0.3), transparent);
+  }
+
   h2 {
-    margin-bottom: 20px;
     text-align: center;
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: 22px;
-    letter-spacing: 2px;
+    font-size: 20px;
+    letter-spacing: 0.15em;
     color: var(--accent-light);
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .field {
-    margin-bottom: 14px;
+    margin-bottom: var(--space-md);
   }
 
   label {
     display: block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 1.2px;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-bottom: 6px;
+    margin-bottom: var(--space-sm);
     color: var(--text-muted);
+    font-family: var(--font-body);
   }
 
   input[type="number"],
   input[type="text"] {
     width: 100%;
-    background: var(--surface-color);
-    border: 1px solid var(--surface-border);
-    border-radius: 6px;
+    background: rgba(13, 20, 36, 0.8);
+    border: 1px solid rgba(197, 151, 62, 0.12);
+    border-radius: 2px;
     color: var(--text-color);
     padding: 8px 10px;
     font-size: 14px;
     font-family: var(--font-body);
-    transition: border-color 0.2s;
+    font-weight: 300;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
 
   input:focus {
     outline: none;
-    border-color: var(--accent-color);
+    border-color: rgba(197, 151, 62, 0.4);
+    box-shadow: 0 0 12px rgba(197, 151, 62, 0.08);
   }
 
   .toggle-field {
@@ -184,15 +205,16 @@
     width: 32px;
     height: 24px;
     padding: 0;
-    background: rgba(201, 169, 110, 0.1);
+    background: rgba(197, 151, 62, 0.08);
     color: var(--accent-color);
-    border: 1px solid rgba(201, 169, 110, 0.2);
-    border-radius: 5px;
+    border: 1px solid rgba(197, 151, 62, 0.15);
+    border-radius: 2px;
+    letter-spacing: 0;
   }
 
   .btn-test:hover {
-    background: rgba(201, 169, 110, 0.22);
-    border-color: rgba(201, 169, 110, 0.4);
+    background: rgba(197, 151, 62, 0.18);
+    border-color: rgba(197, 151, 62, 0.35);
   }
 
   .toggle {
@@ -215,9 +237,10 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #2a2a35;
-    border-radius: 24px;
-    transition: 0.25s;
+    background-color: #1a2438;
+    border-radius: 2px;
+    border: 1px solid rgba(197, 151, 62, 0.1);
+    transition: 0.3s;
   }
 
   .slider::before {
@@ -225,15 +248,16 @@
     position: absolute;
     height: 18px;
     width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: #6a6878;
-    border-radius: 50%;
-    transition: 0.25s;
+    left: 2px;
+    bottom: 2px;
+    background-color: #6b6458;
+    border-radius: 2px;
+    transition: 0.3s;
   }
 
   .toggle input:checked + .slider {
-    background-color: rgba(201, 169, 110, 0.25);
+    background-color: rgba(197, 151, 62, 0.15);
+    border-color: rgba(197, 151, 62, 0.3);
   }
 
   .toggle input:checked + .slider::before {
@@ -243,30 +267,52 @@
 
   .actions {
     display: flex;
-    gap: 8px;
-    margin-top: 24px;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
   }
 
   .btn-save {
     flex: 1;
-    background: linear-gradient(135deg, #c9a96e, #b8944f);
-    color: #1a1a22;
-    font-weight: 600;
-    letter-spacing: 1px;
+    background: linear-gradient(135deg, #c5973e, #a07a2e);
+    color: #060b18;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    border-radius: 2px;
+    border: 1px solid rgba(197, 151, 62, 0.4);
+    position: relative;
+    overflow: hidden;
   }
+
+  .btn-save::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .btn-save:hover::after {
+    left: 100%;
+  }
+
   .btn-save:hover {
-    background: linear-gradient(135deg, #d4b87e, #c9a96e);
-    box-shadow: 0 4px 16px rgba(201, 169, 110, 0.25);
+    box-shadow: 0 4px 16px rgba(197, 151, 62, 0.25);
   }
 
   .btn-cancel {
     flex: 1;
-    background: rgba(255, 255, 255, 0.05);
-    color: #6a6878;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid rgba(197, 151, 62, 0.1);
+    border-radius: 2px;
   }
+
   .btn-cancel:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #8a8898;
+    color: var(--accent-light);
+    border-color: rgba(197, 151, 62, 0.25);
+    background: rgba(197, 151, 62, 0.04);
   }
 </style>

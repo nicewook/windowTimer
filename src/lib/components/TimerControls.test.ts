@@ -51,4 +51,22 @@ describe("TimerControls", () => {
     await fireEvent.click(screen.getByTestId("reset-btn"));
     expect(onreset).toHaveBeenCalledOnce();
   });
+
+  it("shows Restart button when completed", () => {
+    render(TimerControls, { props: { status: "completed" } });
+    expect(screen.getByTestId("restart-btn")).toBeTruthy();
+    expect(screen.getByTestId("restart-btn").textContent).toContain("RESTART");
+  });
+
+  it("calls onreset when Restart clicked", async () => {
+    const onreset = vi.fn();
+    render(TimerControls, { props: { status: "completed", onreset } });
+    await fireEvent.click(screen.getByTestId("restart-btn"));
+    expect(onreset).toHaveBeenCalledOnce();
+  });
+
+  it("does not show Reset button when completed", () => {
+    render(TimerControls, { props: { status: "completed" } });
+    expect(screen.queryByTestId("reset-btn")).toBeNull();
+  });
 });
